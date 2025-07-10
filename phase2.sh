@@ -31,4 +31,4 @@ echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 usermod -aG wheel luka
 
 # Finished c:
-# reboot
+reboot
