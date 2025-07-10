@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Clock
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
@@ -16,15 +18,13 @@ echo -e '\n[omniverse]' >> /etc/pacman.conf
 echo 'Server = https://artix.sakamoto.pl/omniverse/$arch' >> /etc/pacman.conf
 echo 'Server = https://eu-mirror.artixlinux.org/omniverse/$arch' >> /etc/pacman.conf
 echo 'Server = https://omniverse.artixlinux.org/$arch' >> /etc/pacman.conf
+pacman -Sy
 
 # Arch repos support
 pacman -S --noconfirm artix-archlinux-support
 echo -e '\n[extra]\nInclude = /etc/pacman.d/mirrorlist-arch' >> /etc/pacman.conf
 echo -e '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist-arch' >> /etc/pacman.conf
 pacman-key --populate archlinux
-
-# Pacman repos refresh
-pacman -Sy
 
 # sudo setup & reboot
 pacman -S sudo
