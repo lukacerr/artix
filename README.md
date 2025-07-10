@@ -57,12 +57,11 @@ reboot
 
 ## Phase 2
 
-- Login w/non-root user
-- Go `su`
+- Login w/root user
 - Curl and run phase 2 script:
 
 ```sh
-curl -f https://raw.githubusercontent.com/lukacerr/artix/main/phase2.sh | sh
+curl -f https://raw.githubusercontent.com/lukacerr/artix/main/phase2.sh | bash
 ```
 
 _Expect reboot at the end._
