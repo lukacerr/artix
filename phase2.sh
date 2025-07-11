@@ -13,9 +13,6 @@ echo 'export LANG="en_US.UTF-8"' >> /etc/locale.conf
 echo 'export LC_COLLATE="C"' >> /etc/locale.conf
 locale-gen
 
-# Host
-echo "luka-pc" > /etc/hostname
-
 # Repos support
 pm_install artix-archlinux-support
 echo -e '\n[omniverse]' >> /etc/pacman.conf
@@ -33,7 +30,5 @@ echo -e "\n# MANUAL MODIFICATION: %wheel w/nopasswd" >> /etc/sudoers
 echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 usermod -aG wheel luka
 
-# dbus user activation + reboot c:
-pm_install turnstile turnstile-dinit
-dinitctl enable turnstiled
-# reboot
+# Reboot c:
+reboot

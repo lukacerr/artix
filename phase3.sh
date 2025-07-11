@@ -13,6 +13,9 @@ pm_remove() { sudo pacman -Rddsu "$@"; }
 download_file() { sudo curl -fsSL $1 -o $2; }
 download_from_niri_main() { download_file "https://raw.githubusercontent.com/YaLTeR/niri/main/$1" $2; }
 
+# basic
+echo "luka-pc" > /etc/hostname
+
 # xdg dirs
 pm_install xdg-user-dirs
 xdg-user-dirs-update
@@ -72,6 +75,6 @@ sudo pacman -Rddsu --noconfirm gnome-autoar libnautilus-extension localsearch
 #makepkg -si
 
 # Finished c:
-sudo reboot
+# sudo reboot
 
 # fish_add_path -U /home/$USER/.local/bin
