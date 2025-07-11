@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # UTILS & FUNCTIONS
-pm_install() { sudo pacman -Sd --noconfirm --needed "$@"; }
+pm_install() { pacman -Sd --noconfirm --needed "$@"; }
 
 # Clock
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
