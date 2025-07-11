@@ -23,19 +23,19 @@ mkfs.ext4 -L ROOT /dev/???3
 
 # Mount partitions
 mount /dev/disk/by-label/ROOT /mnt
-mkdir /mnt/boot && /mnt/boot/efi && mkdir /mnt/home
+mkdir /mnt/boot && mkdir /mnt/boot/efi && mkdir /mnt/home
 swapon /dev/disk/by-label/SWAP
 mount /dev/disk/by-label/ESP /mnt/boot/efi
 
 # Open NTPD
 dinitctl start ntpd
 
-# System install + Fstab generation
+# Base bootstrap + Fstab generation
 basestrap /mnt base dinit elogind-dinit linux-zen linux-firmware
 fstabgen -U /mnt >> /mnt/etc/fstab
 artix-chroot /mnt # chroot c:
 
-# GRUB
+# Bootloader
 pacman -S --noconfirm grub os-prober efibootmgr amd-ucode
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub
 grub-mkconfig -o /boot/grub/grub.cfg

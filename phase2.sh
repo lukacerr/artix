@@ -33,5 +33,7 @@ echo -e "\n# MANUAL MODIFICATION: %wheel w/nopasswd" >> /etc/sudoers
 echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 usermod -aG wheel luka
 
-# Reboot c:
-reboot
+# dbus user activation + reboot c:
+pm_install turnstile turnstile-dinit
+dinitctl enable turnstiled
+# reboot
