@@ -23,7 +23,7 @@ echo 'Server = https://artix.sakamoto.pl/omniverse/$arch' >> /etc/pacman.conf
 echo 'Server = https://eu-mirror.artixlinux.org/omniverse/$arch' >> /etc/pacman.conf
 echo 'Server = https://omniverse.artixlinux.org/$arch' >> /etc/pacman.conf
 echo -e '\n[extra]\nInclude = /etc/pacman.d/mirrorlist-arch' >> /etc/pacman.conf
-# echo -e '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist-arch' >> /etc/pacman.conf
+echo -e '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist-arch' >> /etc/pacman.conf
 pacman-key --populate archlinux
 pacman -Sy --noconfirm
 
@@ -36,4 +36,4 @@ usermod -aG wheel luka
 # dbus user activation + reboot c:
 pm_install turnstile turnstile-dinit
 dinitctl enable turnstiled
-# reboot
+sudo reboot
