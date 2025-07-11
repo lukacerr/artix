@@ -36,4 +36,4 @@ usermod -aG wheel luka
 # dbus user activation + reboot c:
 pm_install turnstile turnstile-dinit
 dinitctl enable turnstiled
-reboot
+# reboot
