@@ -13,9 +13,6 @@ pm_remove() { sudo pacman -Rddsu "$@"; }
 download_file() { sudo curl -fsSL $1 -o $2; }
 download_from_niri_main() { download_file "https://raw.githubusercontent.com/YaLTeR/niri/main/$1" $2; }
 
-# basic
-echo "luka-pc" > /etc/hostname
-
 # xdg dirs
 pm_install xdg-user-dirs
 xdg-user-dirs-update
@@ -27,12 +24,12 @@ sudo pacman -S --noconfirm --needed gstreamer \
     gst-plugins-base gst-plugins-good
 sudo usermod -aG video $USER
 
-# Flatpak support
-pm_install flatpak
+# dinit compat
+pm_install dbus-dinit-user pipewire pipewire-dinit pipewire-pulse pipewire-pulse-dinit
 
 # Terminal
 pm_install fish starship fzf nano
-sudo chsh -s $(which fish) $USER
+sudo chsh -s /usr/bin/fish $USER
 
 # Niri install
 pm_install niri xdg-desktop-portal-gnome pipewire-jack
@@ -46,12 +43,11 @@ download_from_niri_main resources/dinit/niri-shutdown /etc/dinit.d/user/niri-shu
 dinitctl -u enable niri-shutdown
 download_from_niri_main resources/default-config.kdl /home/$USER/.config/niri/config.kdl
 
-# dinit compat
-pm_install dbus-dinit-user pipewire pipewire-dinit pipewire-pulse pipewire-pulse-dinit
+# Flatpak support
+pm_install flatpak
 
-# Editor & b
-curl -f https://zed.dev/install.sh | sh
-install_copr "sneexy/zen-browser" "zen-browser"
+# Editor & browser
+pm_install zed vivaldi
 
 # Greeter + graphical init
 #pm_install greetd greetd-dinit greetd-tuigreet
