@@ -1,4 +1,16 @@
+# UTILS & FUNCTIONS
+pm_install() {
+    sudo pacman -Sd --noconfirm --needed "$@"
+        --assume-installed nautilus \
+        --assume-installed avahi \
+        --assume-installed gpsd
+}
+
+download_file() { sudo curl -fsSL $1 -o $2; }
+download_from_niri_main() { download_file "https://raw.githubusercontent.com/YaLTeR/niri/main/$1" $2; }
+
 # xdg dirs
+pm_install xdg-user-dirs
 xdg-user-dirs-update
 
 # TODO: Codecs
@@ -6,30 +18,39 @@ xdg-user-dirs-update
 sudo usermod -aG video $USER
 
 # Flatpak support
-sudo pacman -S --noconfirm flatpak
+pm_install flatpak
 
 # Terminal
-sudo pacman -S --noconfirm fish starship fzf
+pm_install fish starship fzf nano
 sudo chsh -s $(which fish) $USER
 
 # Niri install
-sudo pacman -Sd --needed --noconfirm niri xdg-desktop-portal-gnome pipewire-jack
-sudo pacman -Sd --noconfirm alacritty xwayland-satellite fuzzel waybar
-sudo pacman -Sd --needed --noconfirm gnome-keyring pantheon-polkit-agent
-curl -fsSL \
-    https://raw.githubusercontent.com/YaLTeR/niri/main/resources/default-config.kdl \
-    -o /home/$USER/.config/niri/config.kdl
+pm_install niri xdg-desktop-portal-gnome pipewire-jack
+pm_install alacritty xwayland-satellite fuzzel waybar
+pm_install gnome-keyring pantheon-polkit-agent
+# FIXME: Init o config del polkit ?
+sudo mkdir /etc/dinit.d/user && mkdir /home/$USER/config/niri
+download_from_niri_main resources/dinit/niri /etc/dinit.d/user/niri
+download_from_niri_main resources/dinit/niri-shutdown /etc/dinit.d/user/niri-shutdown
+download_from_niri_main resources/default-config.kdl /home/$USER/.config/niri/config.kdl
+
+# pipewire autostart
+sudo pacman -S dbus-dinit-user pipewire-dinit pipewire-pulse-dinit
+dinitctl -u enable pipewire
+dinitctl -u enable pipewire-pulse
 
 # Greeter + graphical init
-sudo pacman -Sd --needed --noconfirm greetd greetd-dinit greetd-tuigreet
-ln -s /etc/runit/sv/greetd /run/runit/service/ # FIXME
-echo -e '[terminal]\nvt = current' > /etc/greetd/config.toml
-echo -e '\n[default_session]' >> /etc/greetd/config.toml
-echo 'command = "tuigreet --time --cmd niri --session"' >> /etc/greetd/config.toml
-echo -e '\n[initial_session]' >> /etc/greetd/config.toml
-echo 'command = "niri --session"' >> /etc/greetd/config.toml
-echo 'user = "luka"' >> /etc/greetd/config.toml
-sudo dinitctl start greetd
+#pm_install greetd greetd-dinit greetd-tuigreet
+#echo -e '[terminal]\nvt = current' > /etc/greetd/config.toml
+#echo -e '\n[default_session]' >> /etc/greetd/config.toml
+#echo 'command = "tuigreet --time --cmd niri --session"' >> /etc/greetd/config.toml
+#echo -e '\n[initial_session]' >> /etc/greetd/config.toml
+#echo 'command = "niri --session"' >> /etc/greetd/config.toml
+#echo 'user = "luka"' >> /etc/greetd/config.toml
+#sudo dinitctl enable greetd
+
+# dinit
+dinitctl enable turnstiled
 
 # paru install
 #sudo pacman -S --needed base-devel git

@@ -3,7 +3,7 @@
 ## Phase 1
 
 - Enter on CD/ISO, no disk
-- Login with `root`, no `artix`
+- Login with `root`
 
 **In `cfdisk`**
 

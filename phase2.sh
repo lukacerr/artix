@@ -30,5 +30,6 @@ echo -e "\n# MANUAL MODIFICATION: %wheel w/nopasswd" >> /etc/sudoers
 echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers
 usermod -aG wheel luka
 
-# Finished c:
+# dbus user activation + reboot c:
+pacman -S turnstile turnstile-dinit
 reboot
