@@ -11,7 +11,7 @@ pm_install xdg-user-dirs
 xdg-user-dirs-update
 
 # TODO: ROCM
-pm_install mesa vulkan-radeon libva-utils
+pm_install mesa vulkan-radeon vulkan-mesa-layer libva-utils
 # pm_install gstreamer gst-plugins-base gst-plugins-good
 sudo usermod -aG video $USER
 
@@ -47,10 +47,6 @@ mkdir .config/niri
 download_niri_resource "default-config.kdl" ".config/niri/config.kdl"
 sudo mkdir /usr/local/share/xdg-desktop-portal
 download_niri_resource "niri-portals.conf" "/usr/local/share/xdg-desktop-portal/niri-portals.conf"
-download_niri_resource "dinit/niri" "/etc/dinit.d/user/niri"
-download_niri_resource "dinit/niri-shutdown" "/etc/dinit.d/user/niri-shutdown"
-dinitctl -u enable niri
-dinitctl -u enable niri-shutdown
 
 # Editor & browser
 pm_install zed vivaldi
@@ -71,4 +67,6 @@ git clone https://aur.archlinux.org/paru
 
 # Finished c:
 sudo pacman -Syu --noconfirm
+
+# EMERGENCY: sudo pacman -S isoimagewriter zen-browser
 # sudo reboot
